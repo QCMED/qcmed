@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('status')->default('draft'); // draft | in_review | finalized | rejected
             $table->timestamp('finalized_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
         });
     }
