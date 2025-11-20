@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
-            // $table->string('code')->unique();
-            $table->string('title');
-            $table->text('description')->nullable();
+            $table->integer('numero')->unique()->comment('Numéro du chapitre');
+            $table->text('description')->comment('Description du chapitre');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
