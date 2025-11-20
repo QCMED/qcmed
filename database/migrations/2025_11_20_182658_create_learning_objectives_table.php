@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('learning_objectives', function (Blueprint $table) {
             $table->id();
-            $table->integer('numero')->comment('Numéro de l\'objectif d\'apprentissage');
+            $table->integer('chapter_numero')->comment('Numéro du chapitre associé');
             $table->string('rang')->comment('Rang de l\'objectif');
             $table->string('rubrique')->comment('Rubrique de l\'objectif');
             $table->text('intitule')->comment('Intitulé de l\'objectif d\'apprentissage');
-            $table->string('chapter_numero')->comment('Numéro du chapitre associé');
             $table->foreign('chapter_numero')->references('numero')->on('chapters')->cascadeOnDelete();
             $table->timestamps();
         });

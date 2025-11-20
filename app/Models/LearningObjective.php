@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class LearningObjective extends Model
 {
     protected $fillable = [
-        'numero',
         'rang',
         'rubrique',
         'intitule',
@@ -16,7 +15,7 @@ class LearningObjective extends Model
     ];
 
     protected $casts = [
-        'rang' => 'integer',
+        //
     ];
 
     /**
