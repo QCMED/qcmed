@@ -16,6 +16,14 @@ class Chapter extends Model
     ];
 
     /**
+     * Retourne le titre du chapitre pour l'affichage
+     */
+    public function getNameAttribute(): string
+    {
+        return "Item {$this->numero} - " . \Illuminate\Support\Str::limit($this->description, 80);
+    }
+
+    /**
      * Récupère les objectifs d'apprentissage de ce chapitre
      */
     public function learningObjectives(): HasMany

@@ -29,7 +29,13 @@ class QuestionForm
 
                 Select::make("chapter_id")
                     ->label("Chapitre")
-                    ->options(Chapter::query()->pluck('title', 'id'))
+                    ->options(function () {
+                        return Chapter::query()
+                            ->get()
+                            ->mapWithKeys(fn ($chapter) => [
+                                $chapter->id => "Item {$chapter->numero} - " . \Illuminate\Support\Str::limit($chapter->description, 80)
+                            ]);
+                    })
                     ->searchable()
                     ->loadingMessage('Chargement des chapitres...')
                     ->noSearchResultsMessage('Pas de chapitre trouvé.')
