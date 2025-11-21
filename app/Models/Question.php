@@ -34,6 +34,14 @@ class Question extends Model
         'expected_answer' => 'array', // Caster le JSON en array
     ];
 
+    /**
+     * Retourne le titre de la question pour l'affichage
+     */
+    public function getTitleAttribute(): string
+    {
+        return 'Question #' . $this->id . ' - ' . \Illuminate\Support\Str::limit(strip_tags($this->body), 60);
+    }
+
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
