@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('intitule')->comment('Intitulé de l\'objectif d\'apprentissage');
             $table->foreign('chapter_numero')->references('numero')->on('chapters')->cascadeOnDelete();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
