@@ -8,6 +8,8 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
@@ -41,6 +43,7 @@ class QuestionForm
                         "2" => "QZONE",
                     ])
                     ->default("0")
+                    ->disabled()
                     ->live(),
                 
                 
@@ -49,27 +52,35 @@ class QuestionForm
                         "0" => [
                             Repeater::make("expected_answer")
                             ->schema([
-                                TextInput::make("lettre")
-                                ->distinct()
-                                ->disabled()
-                                ->default("A"),
-                                TextInput::make("texte"),
+                                TextInput::make("proposition")
+                                ->distinct(),
                                 TextInput::make("correction"),
+                                Toggle::make("vrai")
+                                ->onColor("success")
+                                ->offColor("danger")
+                                ->inline(false),
                                 
                             ])
                             ->live()
-                            ->defaultItems(4)
+                            ->defaultItems(5)
                             ->minItems(4)
                             ->maxItems(20)
                             ->columns(3),
 
-
+                            Toggle::make("proposed_count")
                     ],
                         "2" => [FileUpload::make("image"),],
                         "1" => [TextInput::make("expected_answer")],
                         
                     }),
-            
-            ]);
+                    
+                    ToggleButtons::make('status')
+                    ->options([
+                        '0' => 'Brouillon',
+                        '1' => 'En révisions',
+                        '2' => 'Finie'
+                    ])
+                
+                            ]);
     }
 }
