@@ -4,8 +4,7 @@
 
 [QCMED est un projet de banque de QCMs par des étudiants en médecine, pour des étudiants en médecine!
 Notre objectif est de créer une plateforme **gratuite** que les différents tutorats des années supérieurs pourront utiliser pour proposer des questions et des dossiers progressifs à leurs étudiants.
-Le projet est ambitieux et se veut conforme à toute la docimologie de l'EDN et compétitif avec les plateformes payantes déjà existantes.
-Pour l'instant l'équipe est composée d'étudiants en médecine amateurs d'informatique, auto-didacte et qui ont quelques années d'expérience en associatif.]
+Le projet est ambitieux et se veut conforme à toute la docimologie de l'EDN et compétitif avec les plateformes payantes déjà existantes.]
 
 ## Table des matières
 
@@ -21,66 +20,19 @@ Pour l'instant l'équipe est composée d'étudiants en médecine amateurs d'info
 
 ## Prérequis
 
-[Il n'y en a pas vraiment! Il est recommandé d'avoir un peu d'expérience en informatique, de préférence en **php** et avec le framework **Laravel**, mais dans l'équipe on apprend beaucoup sur le tas.]
+[Liste de tous les éléments nécessaires pour le bon fonctionnement du projet avec description + lien vers la documentation]
 
 ## Installation
 
-### Après avoir téléchargé le dépôt git (pour Linux et WSL pour les utilisateurs sous windows)
-
-1. Copier l'environnement :
-
-```powershell
-cp.env.example .env
-```
-
-2. Installer les dépendances PHP :
-
-```powershell
-composer install
-```
-
-3. (Optionnel) Installer les dépendances JS et compiler :
-
-```powershell
-npm install
-npm run dev
-```
-
-4. Générer la clé app :
-
-```powershell
-php artisan key:generate
-```
-
-5. Configurer la base de données dans `.env` (par exemple pour sqlite):
-
-```
-DB_CONNECTION=sqlite
-DB_DATABASE=/absolute/path/to/database/database.sqlite  # ou use :memory: pour tests
-```
-
-6. Lancer les migrations et les seeders :
-
-```powershell
-php artisan migrate --seed
-```
-
-Le seeder crée des utilisateurs de test, des items et des questions exemples.
+[Étapes avec exemples des commandes à lancer pour installer le projet en local]
 
 ## Utilisation
 
-[Pour accéder au dashboard d'administrateur, vous pouvez créer un utilisateur avec ]
-
-```powershell
-php artisan make:filament-user
-```
-
-[Répondez aux questions qui s'affichent sur le terminal, puis accédez à la DB pour changer le 'role' de votre nouvel utilisateur de '4' à '1' ]
+[### Sous-titre + description avec exemple des commandes à lancer pour l'ensemble des actions disponibles à l'utilisation dans un mode de développement]
 
 ## Contribution
 
-[### Sous-titre + description avec exemple des commandes à lancer pour l'ensemble du flux de contribution sur le dépôt
-A décrire!]
+[### Sous-titre + description avec exemple des commandes à lancer pour l'ensemble du flux de contribution sur le dépôt]
 
 ## Construit avec
 
