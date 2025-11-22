@@ -39,7 +39,14 @@ class Question extends Model
      */
     public function getTitleAttribute(): string
     {
-        return 'Question #' . $this->id . ' - ' . \Illuminate\Support\Str::limit(strip_tags($this->body), 60);
+        if (!$this->exists) {
+            return 'Nouvelle question';
+        }
+        
+        $body = strip_tags($this->body ?? '');
+        $excerpt = !empty($body) ? \Illuminate\Support\Str::limit($body, 60) : 'Sans énoncé';
+        
+        return "Question #{$this->id} - {$excerpt}";
     }
 
     public function author()

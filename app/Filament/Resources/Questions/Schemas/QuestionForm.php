@@ -22,9 +22,10 @@ class QuestionForm
     {
         return $schema
             ->components([
-                TextInput::make("name"),
-
-                RichEditor::make("body"),
+                RichEditor::make("body")
+                    ->label("Énoncé de la question")
+                    ->required()
+                    ->columnSpanFull(),
 
 
 
@@ -72,18 +73,19 @@ class QuestionForm
 
 
                 Select::make("type")
+                    ->label("Type de question")
                     ->options([
                         "0" => "QCM/QRU/QRP",
                         "1" => "QROC",
                         "2" => "QZONE",
                     ])
                     ->default("0")
-                    ->disabled()
+                    ->required()
                     ->live(),
                 
                 
                 Grid::make(1)
-                    ->schema(fn (Get $get): array => match ($get('type')) {
+                    ->schema(fn (Get $get): array => match (strval($get('type'))) {
                         "0" => [
                             Repeater::make("expected_answer")
                             ->schema([
