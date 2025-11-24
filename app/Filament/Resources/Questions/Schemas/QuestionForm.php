@@ -4,6 +4,8 @@ namespace App\Filament\Resources\Questions\Schemas;
 
 use App\Models\Chapter;
 use App\Models\LearningObjective;
+use Barryvdh\Debugbar\Facades\Debugbar;
+use Filament\Forms\Components\Field;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
@@ -14,20 +16,16 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
-
+use Nette\PhpGenerator\Closure;
 
 class QuestionForm
 {
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(6)
             ->components([
-                RichEditor::make("body")
-                    ->label("Énoncé de la question")
-                    ->required()
-                    ->columnSpanFull(),
-
-
+                
 
                 Select::make("chapter_id")
                     ->label("Chapitre")
@@ -42,8 +40,29 @@ class QuestionForm
                     ->loadingMessage('Chargement des chapitres...')
                     ->noSearchResultsMessage('Pas de chapitre trouvé.')
                     ->optionsLimit(10)
+                    ->required()
                     ->live()
                     ->afterStateUpdated(fn (callable $set) => $set('learningObjectives', [])),
+
+                Select::make("type")
+                    ->label("Type de question")
+                    ->options([
+                        "0" => "QCM/QRU/QRP",
+                        "1" => "QROC",
+                        "2" => "QZONE",
+                    ])
+                    ->default("0")
+                    ->required()
+                    ->live(),
+
+                ToggleButtons::make('status')
+                    ->options([
+                        '0' => 'Brouillon',
+                        '1' => 'En révisions',
+                        '2' => 'Finie'
+                    ]),
+                
+
 
                 Select::make("learningObjectives")
                     ->label("Objectifs d'apprentissage")
@@ -68,21 +87,22 @@ class QuestionForm
                     })
                     ->searchable()
                     ->preload()
+                    ->columnSpanFull()
                     ->hidden(fn (callable $get) => !$get('chapter_id'))
                     ->helperText('Sélectionnez un ou plusieurs objectifs d\'apprentissage associés à cette question'),
 
-
-                Select::make("type")
-                    ->label("Type de question")
-                    ->options([
-                        "0" => "QCM/QRU/QRP",
-                        "1" => "QROC",
-                        "2" => "QZONE",
-                    ])
-                    ->default("0")
+                RichEditor::make("body")
+                    ->label("Énoncé de la question")
                     ->required()
-                    ->live(),
-                
+                    ->columnSpanFull()
+                    ->toolbarButtons([
+                                ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript', 'link'],
+                                ['h2', 'h3', 'alignStart', 'alignCenter', 'alignEnd'],
+                                ['blockquote', 'bulletList', 'orderedList'],
+                                ['attachFiles'], // The `customBlocks` and `mergeTags` tools are also added here if those features are used.
+                                ['undo', 'redo'],
+                            ]),
+                                        
                 
                 Grid::make(1)
                     ->schema(fn (Get $get): array => match (strval($get('type'))) {
@@ -90,34 +110,42 @@ class QuestionForm
                             Repeater::make("expected_answer")
                             ->schema([
                                 TextInput::make("proposition")
-                                ->distinct(),
-                                TextInput::make("correction"),
+                                ->distinct()
+                                ->required()
+                                ->columnSpanFull(),
+                                TextInput::make("correction")
+                                ->columnSpan(5),
                                 Toggle::make("vrai")
                                 ->onColor("success")
                                 ->offColor("danger")
                                 ->inline(false),
-                                
                             ])
+                            ->rules([
+                                    fn (Field $component): null => Debugbar::info($component->getState())
+                                ])
+
                             ->live()
                             ->defaultItems(5)
                             ->minItems(4)
                             ->maxItems(20)
-                            ->columns(3),
+                            ->columns(6)
+                            ->addActionLabel('Ajouter une proposition')
+                            ->columnSpan(4),
 
                             Toggle::make("proposed_count")
+                            ->columnSpan(2)
+                            ->label("Afficher le nombre de propositions à cocher pour l'étudiant ")
+                            ->inline(False),
+
                     ],
                         "2" => [FileUpload::make("image"),],
                         "1" => [TextInput::make("expected_answer")],
                         
-                    }),
+                    })
+                    ->columnSpanFull()
+                    ->columns(6),
+                     
                     
-                    ToggleButtons::make('status')
-                    ->options([
-                        '0' => 'Brouillon',
-                        '1' => 'En révisions',
-                        '2' => 'Finie'
-                    ])
-                
                             ]);
-    }
+    } 
 }
