@@ -2,6 +2,7 @@
 
 namespace App\Filament\Student\Resources\Questions;
 
+use App\Filament\Student\Resources\Questions\Pages\AnswerQuestion;
 use App\Filament\Student\Resources\Questions\Pages\CreateQuestion;
 use App\Filament\Student\Resources\Questions\Pages\EditQuestion;
 use App\Filament\Student\Resources\Questions\Pages\ListQuestions;
@@ -30,6 +31,41 @@ class QuestionResource extends Resource
         return QuestionForm::configure($schema);
     }
 
+    public static function infolist(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                \Filament\Schemas\Components\Section::make('Informations')
+                    ->schema([
+                        \Filament\Schemas\Components\Text::make('info')
+                            ->content(fn ($record) => "Item: " . ($record->chapter?->numero ?? '-') . " | Type: " . match(strval($record->type)) {
+                                '0' => 'QCM/QRU/QRP',
+                                '1' => 'QROC',
+                                '2' => 'QZONE',
+                                default => 'Inconnu'
+                            }),
+                    ]),
+                
+                \Filament\Schemas\Components\Section::make('Énoncé')
+                    ->schema([
+                        \Filament\Schemas\Components\Html::make(fn ($record) => $record->body),
+                    ]),
+                
+                \Filament\Schemas\Components\Section::make('Correction')
+                    ->schema([
+                        \Filament\Schemas\Components\View::make('filament.forms.components.question-correction')
+                            ->viewData(fn ($record) => [
+                                'expected_answer' => $record->expected_answer,
+                                'user_answer' => \App\Models\Attempt::where('question_id', $record->id)
+                                    ->where('user_id', auth()->id())
+                                    ->latest()
+                                    ->first()?->answers ?? []
+                            ]),
+                    ])
+                    ->visible(fn ($record) => strval($record->type) === '0'),
+            ]);
+    }
+
     public static function table(Table $table): Table
     {
         return QuestionsTable::configure($table);
@@ -46,6 +82,7 @@ class QuestionResource extends Resource
     {
         return [
             'index' => ListQuestions::route('/'),
+            'answer' => AnswerQuestion::route('/{record}/answer'),
             'view' => ViewQuestion::route('/{record}'),
         ];
     }

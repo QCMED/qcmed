@@ -2,7 +2,6 @@
 
 namespace App\Filament\Student\Resources\Questions\Tables;
 
-use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -28,13 +27,13 @@ class QuestionsTable
                 TextColumn::make('type')
                     ->label('Type')
                     ->badge()
-                    ->formatStateUsing(fn ($state) => match($state) {
+                    ->formatStateUsing(fn ($state) => match(strval($state)) {
                         '0' => 'QCM/QRU/QRP',
                         '1' => 'QROC',
                         '2' => 'QZONE',
                         default => 'Inconnu'
                     })
-                    ->color(fn ($state) => match($state) {
+                    ->color(fn ($state) => match(strval($state)) {
                         '0' => 'success',
                         '1' => 'info',
                         '2' => 'warning',
@@ -44,9 +43,8 @@ class QuestionsTable
             ->filters([
                 //
             ])
-            ->recordActions([
-                ViewAction::make(),
-            ])
+            ->recordAction(null)
+            ->recordUrl(fn ($record) => \App\Filament\Student\Resources\Questions\QuestionResource::getUrl('answer', ['record' => $record]))
             ->toolbarActions([
                 //
             ]);
