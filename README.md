@@ -75,7 +75,9 @@ Le seeder crée des utilisateurs de test, des items et des questions exemples.
 php artisan make:filament-user
 ```
 
-[Répondez aux questions qui s'affichent sur le terminal, puis accédez à la DB pour changer le 'role' de votre nouvel utilisateur de '4' à '1' ]
+[Remplissez le formulaire qui s'affiche sur le terminal, puis accédez à la DB pour changer le 'role' de votre nouvel utilisateur de '4' à '1' 
+
+Si vous utilisez SQLite pour votre environnement dev, vous pouvez utiliser l'extension 'database client' de VS code]
 
 ## Contribution
 
@@ -86,17 +88,22 @@ A décrire!]
 
 ### Langages & Frameworks
 
-[Liste de tout ce qui permet la confection du projet avec description + lien vers la documentation]
+[
+[PHP](https://www.php.net/docs.php)
+[Laravel](https://laravel.com/docs/installation)
+[Livewire](https://laravel-livewire.com/)
+[Tailwind](https://tailwindcss.com/)
+[Filament](https://filamentphp.com/docs)]
 
 ### Outils
 
 #### CI
 
-[Liste de tout ce qui permet l'intégration automatisée du projet avec description + lien vers la documentation et mise en avant des comptes, organisations et variables]
+[En gros, git et github. Quelques extensions VS code recommandés sont ]
 
 #### Déploiement
 
-[Liste de tout ce qui permet le déploiement du projet avec description + lien vers la documentation et mise en avant des comptes, organisations et variables]
+[On utilisera Jenkins et Kubernetes le moment venu mais on n'y est pas encore]
 
 ## Documentation
 
@@ -106,7 +113,7 @@ A décrire!]
 
 Afin de maintenir un cycle de publication claire et de favoriser la rétrocompatibilité, la dénomination des versions suit la spécification décrite par la [Gestion sémantique de version](https://semver.org/lang/fr/)
 
-Les versions disponibles ainsi que les journaux décrivant les changements apportés sont disponibles depuis [la page des Releases][mettre le lien ici].
+Les versions disponibles ainsi que les journaux décrivant les changements apportés sont disponibles depuis [la page des Releases][https://github.com/C2SU/qcmed-filament/releases].
 
 ## Licence
 
