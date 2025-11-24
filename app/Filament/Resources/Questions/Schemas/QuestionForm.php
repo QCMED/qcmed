@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Questions\Schemas;
 use App\Models\Chapter;
 use App\Models\LearningObjective;
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Closure;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
@@ -16,7 +17,6 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
-use Nette\PhpGenerator\Closure;
 
 class QuestionForm
 {
@@ -117,13 +117,23 @@ class QuestionForm
                                 ->columnSpan(5),
                                 Toggle::make("vrai")
                                 ->onColor("success")
+                                ->label("vrai ou faux?")
                                 ->offColor("danger")
                                 ->inline(false),
                             ])
                             ->rules([
-                                    fn (Field $component): null => Debugbar::info($component->getState())
-                                ])
+                                        fn (): Closure => function (string $attribute, $value, Closure $fail) {
+                                            $atLeastOneCorrectAnswer = False;
+                                            foreach($value as $item)
+                                            if ($item["vrai"]==True ) {
+                                                $atLeastOneCorrectAnswer = True;
+                                            }
+                                            if ($atLeastOneCorrectAnswer == False){
 
+                                                $fail('Il faut mettre au moins une réponse vraie!.');
+                                            }
+                                        },
+                                    ])
                             ->live()
                             ->defaultItems(5)
                             ->minItems(4)
