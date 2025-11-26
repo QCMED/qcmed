@@ -123,7 +123,7 @@ class QuestionForm
                                 ->inline(false),
                             ])
                             ->rules([
-                                        fn (): Closure => function ($value, Closure $fail) {
+                                        fn (): Closure => function (string $attribute, $value, Closure $fail) {
                                             $atLeastOneCorrectAnswer = False;
                                             foreach($value as $item)
                                             if ($item["vrai"]==True ) {
