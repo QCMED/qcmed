@@ -9,6 +9,7 @@ use Closure;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Form;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
@@ -17,11 +18,27 @@ use Illuminate\Support\Facades\Auth;
 class DossierForm
 {
     public static function configure(Schema $schema): Schema
-    {
+    {   
+        $questionFormSchema = QuestionForm::schemaArray();
+        unset($questionFormSchema[2]);
+
         return $schema
+            ->columns(6)
             ->components([
                 TextInput::make("title")
-                    ->columnSpanFull(),
+                    ->required()
+                    ->columnSpan(4),
+
+                ToggleButtons::make('status')
+                    ->options([
+                        '0' => 'Brouillon',
+                        '1' => 'En révisions',
+                        '2' => 'Finie'
+                    ])
+                    ->grouped()
+                    ->live()
+                    ->required()
+                    ->columnSpan(2),
                 
                 RichEditor::make("description")
                     ->columnSpanFull()
@@ -35,20 +52,20 @@ class DossierForm
 
                 Repeater::make("questions")
                     ->relationship()
-                    ->schema(QuestionForm::schemaArray())
+                    ->schema($questionFormSchema)
                     ->orderColumn("dossier_order")
                     ->reorderable()
                     ->reorderableWithButtons()
                     ->columnSpanFull()
                     ->collapsible()
-                    ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                    ->mutateRelationshipDataBeforeCreateUsing(function (array $data, Get $get): array {
                         $data['user_id'] = Auth::id();
-
+                        $data['status'] = $get("../../status");
                         return $data;
                     })
-                    ->mutateRelationshipDataBeforeSaveUsing(function (array $data): array {
+                    ->mutateRelationshipDataBeforeSaveUsing(function (array $data, Get $get): array {
                         $data['user_id'] = Auth::id();
-
+                        $data['status'] = $get("../../status");
                         return $data;
                     })
                     ->defaultItems(5)
