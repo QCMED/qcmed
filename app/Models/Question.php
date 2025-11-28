@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -42,10 +43,10 @@ class Question extends Model
         if (!$this->exists) {
             return 'Nouvelle question';
         }
-        
+
         $body = strip_tags($this->body ?? '');
         $excerpt = !empty($body) ? \Illuminate\Support\Str::limit($body, 60) : 'Sans énoncé';
-        
+
         return "Question #{$this->id} - {$excerpt}";
     }
 
@@ -91,11 +92,21 @@ class Question extends Model
 
     public function isDraft(): bool
     {
-        return $this->status === '0';
+        return $this->status == '0';
     }
 
     public function isFinalized(): bool
     {
-        return $this->status === '2';
+        return $this->status == '2';
+    }
+
+    public function scopeQuestionIsolee(Builder $query)
+    {
+        return $query->where('dossier_id', '=', NULL);
+    }
+
+    public function scopeQuestionDossier(Builder $query)
+    {
+        return $query->whereNot('dossier_id', '=', NULL);
     }
 }
