@@ -20,8 +20,9 @@ class UserResource extends Resource
                 ->required(),
             Forms\Components\Select::make('role')
                 ->label('Rôle')
-                ->options(function () {
+                ->options(function ($get) {
                     $user = auth()->user();
+                    $recordRole = $get('role');
                     $options = [];
                     if ($user?->role === \App\Models\User::ROLE_SUPERADMIN) {
                         $options = [
@@ -31,6 +32,12 @@ class UserResource extends Resource
                             \App\Models\User::ROLE_STUDENT => 'Utilisateur',
                         ];
                     } elseif ($user?->role === \App\Models\User::ROLE_ADMIN) {
+                        // Si on édite un admin ou superadmin, on ne peut pas changer le rôle
+                        if (in_array($recordRole, [\App\Models\User::ROLE_SUPERADMIN, \App\Models\User::ROLE_ADMIN])) {
+                            return [
+                                $recordRole => $recordRole === \App\Models\User::ROLE_SUPERADMIN ? 'Super Admin' : 'Admin',
+                            ];
+                        }
                         $options = [
                             \App\Models\User::ROLE_REDACELEC => 'Relecteur',
                             \App\Models\User::ROLE_STUDENT => 'Utilisateur',
