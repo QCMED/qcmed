@@ -21,7 +21,7 @@ class QuestionForm
 {
     public static function schemaArray() : array
     {
-        return [     
+        return [
                 Select::make("chapter_id")
                     ->label("Chapitre")
                     ->options(function () {
@@ -44,8 +44,8 @@ class QuestionForm
                     ->label("Type de question")
                     ->options([
                         "0" => "QCM/QRU/QRP",
-                        "1" => "QROC",
-                        "2" => "QZONE",
+                        // "1" => "QROC",
+                        // "2" => "QZONE",
                     ])
                     ->default("0")
                     ->required()
@@ -60,7 +60,7 @@ class QuestionForm
                     ->grouped()
                     ->required()
                     ->columnSpan(2),
-                
+
                 // Select::make("learningObjectives")
                 //     ->label("Objectifs d'apprentissage")
                 //     ->multiple()
@@ -70,12 +70,12 @@ class QuestionForm
                 //         if (!$chapterId) {
                 //             return [];
                 //         }
-                        
+
                 //         $chapter = Chapter::find($chapterId);
                 //         if (!$chapter) {
                 //             return [];
                 //         }
-                        
+
                 //         return LearningObjective::where('chapter_numero', $chapter->numero)
                 //             ->get()
                 //             ->mapWithKeys(fn ($objective) => [
@@ -99,8 +99,8 @@ class QuestionForm
                                 ['attachFiles'], // The `customBlocks` and `mergeTags` tools are also added here if those features are used.
                                 ['undo', 'redo'],
                             ]),
-                                        
-                
+
+
                 Grid::make(1)
                     ->schema(fn (Get $get): array => match (strval($get('type'))) {
                         "0" => [
@@ -143,14 +143,15 @@ class QuestionForm
                             ->addActionLabel('Ajouter une proposition')
                             ->columnSpanFull()
                     ],
-                        "2" => [FileUpload::make("image"),],
-                        "1" => [TextInput::make("expected_answer")],
-                        
+                        // "1" => [TextInput::make("expected_answer")],
+                        // "2" => [FileUpload::make("image"),],
+                        default => []
+
                     })
                     ->columnSpanFull()
                     ->columns(6),
-                     
-                    
+
+
                 ];
     }
     public static function configure(Schema $schema): Schema
@@ -158,5 +159,5 @@ class QuestionForm
         return $schema
             ->columns(6)
             ->components(self::schemaArray());
-    } 
+    }
 }
