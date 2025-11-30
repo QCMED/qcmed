@@ -1,46 +1,14 @@
--- Correspondance des IDs de Matière :
--- 1: Anatomie et Cytologie Pathologiques
--- 2: Anesthésie - Réanimation (Inclut l'anesthésie pure de la liste initiale)
--- 3: Cancérologie
--- 4: Chirurgie Digestive
--- 5: CMF (Chirurgie Maxillo-Faciale)
--- 6: Dermatologie
--- 7: Douleurs - Soins Palliatifs
--- 8: Endocrinologie
--- 9: Génétique
--- 10: Gériatrie
--- 11: Gynécologie Médicale (Non présente dans les relations initiales)
--- 12: Gynécologie - Obstétrique (Fusionne Gynécologie Obstétrique de la liste initiale)
--- 13: Hématologie
--- 14: HGE (Hépato-Gastro-Entérologie)
--- 15: Imagerie Médicale (Non présente dans les relations initiales)
--- 16: Immunopathologie
--- 17: Infectiologie
--- 18: Médecine Cardiovasculaire
--- 19: Médecine Générale
--- 20: MIR - Urgences (Fusionne ANESTHÉSIE - RÉANIMATION et MÉDECINE INTENSIVE - RÉANIMATION - URGENCES pour les items d'urgences/réanimation)
--- 21: Médecine Interne
--- 22: Médecine Légale - Médecine du Travail
--- 23: Médecine Moléculaire (Non présente dans les relations initiales)
--- 24: MPR (Médecine Physique et Réadaptation)
--- 25: Médecine Vasculaire
--- 26: Néphrologie
--- 27: Neurochirurgie
--- 28: Neurologie
--- 29: Nutrition
--- 30: Ophtalmologie
--- 31: ORL
--- 32: Orthopédie - Traumatologie
--- 33: Parasitologie (Non présente dans les relations initiales)
--- 34: Pédiatrie
--- 35: Pneumologie
--- 36: Psychiatrie - Addictologie
--- 37: Rhumatologie
--- 38: Santé Publique
--- 39: Thérapeutique
--- 40: Urologie
 
-INSERT INTO matiere_chapitre (matiere_id, chapitre_id) VALUES
+CREATE TABLE IF NOT EXISTS chapitres_par_matiere (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  matiere_id INTEGER,
+  chapitre_id INTEGER,
+  FOREIGN KEY (matiere_id) REFERENCES matiere_id(id) ON DELETE CASCADE,
+  FOREIGN KEY (chapitre_id) REFERENCES chapitre_id(id) ON DELETE CASCADE,
+  UNIQUE(matiere_id, chapitre_id)
+);
+
+INSERT INTO chapitres_par_matiere (matiere_id, chapitre_id) VALUES
 -- Anatomie et Cytologie Pathologiques (1)
 (1, 90), (1, 112), (1, 159), (1, 167), (1, 193), (1, 194), (1, 195), (1, 206), (1, 210), (1, 211), 
 (1, 220), (1, 241), (1, 219), (1, 261), (1, 263), (1, 271), (1, 272), (1, 273), (1, 279), (1, 282), 

@@ -1,6 +1,12 @@
 -- Import des chapitres du programme R2C
 BEGIN;
 
+CREATE TABLE IF NOT EXISTS chapitre_id (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  numero INTEGER UNIQUE,
+  description TEXT
+);
+
 INSERT INTO "chapitre_id" ("numero", "description") VALUES
 ('1', 'La relation médecin-malade dans le cadre du colloque singulier ou au sein d''une équipe, le cas échéant pluriprofessionnelle. La communication avec le patient et son entourage. L''annonce d''une maladie grave ou létale ou d''un dommage associé aux soins. La formation du patient. La personnalisation de la prise en charge médicale.'),
 ('2', 'Les valeurs professionnelles du médecin et des autres professions de santé'),
