@@ -12,7 +12,7 @@ class LearningObjectivesSeeder extends Seeder
      */
     public function run(): void
     {
-        $tsvPath = 'C:\\Users\\User\\Downloads\\Objectif de connaissance par item.xlsx - Sheet1 (1).tsv';
+        $tsvPath = 'database/Objectif de connaissance par item.xlsx - Sheet1 (1).tsv';
         
         if (!file_exists($tsvPath)) {
             $this->command->error('Fichier TSV introuvable : ' . $tsvPath);
