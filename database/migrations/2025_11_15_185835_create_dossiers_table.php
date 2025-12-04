@@ -18,15 +18,6 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        Schema::create('dossier_question', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('dossier_id')->constrained('dossiers')->cascadeOnDelete();
-            $table->foreignId('question_id')->constrained('questions')->cascadeOnDelete();
-            $table->integer('order')->default(0);
-            $table->timestamps();
-            $table->unique(['dossier_id','question_id']);
-        });
     }
 
     /**
@@ -34,7 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dossier_question');
         Schema::dropIfExists('dossiers');
     }
 };
