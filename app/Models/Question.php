@@ -14,6 +14,14 @@ class Question extends Model
     use SoftDeletes;
     use HasFactory;
 
+    const TYPE_QCM = 0;
+    const TYPE_QROC = 1;
+    const TYPE_QZONE =2;
+
+    const STATUS_DRAFT = 0;
+    const STATUS_TO_BE_REVIEWED = 1;
+    const STATUS_FINALIZED = 2;
+
     protected $fillable = [
         'user_id',
         'dossier_id',
@@ -71,11 +79,6 @@ class Question extends Model
         return $this->belongsToMany(LearningObjective::class);
     }
 
-    // public function choices()
-    // {
-    //     return $this->hasMany(Choice::class);
-    // }
-
     // public function reviews()
     // {
     //     return $this->hasMany(QuestionReview::class);
@@ -83,10 +86,10 @@ class Question extends Model
 
     public function scopeFinalized($query)
     {
-        return $query->where('status', '2');
+        return $query->where('status', self::STATUS_FINALIZED);
     }
 
-    public function scopeInReview($query)
+    public function scopeInReview($query) // Pas si utile?
     {
         return $query->where('status', '1');
     }
