@@ -35,7 +35,7 @@ class Dossier extends Model
     {
         DB::transaction(function() {
             $this->questions()->forceDelete();
-            parent::delete(); // Finally, delete the user
+            parent::delete(); // Finally, delete the dossier
         });
     }
 }
