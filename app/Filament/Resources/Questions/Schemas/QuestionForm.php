@@ -123,7 +123,7 @@ class QuestionForm
                                             $atLeastOneCorrectAnswer = true;
                                         }
                                     }
-                                    if ($atLeastOneCorrectAnswer == false) {
+                                    if ($atLeastOneCorrectAnswer === false) {
 
                                         $fail('Il faut mettre au moins une réponse vraie!');
                                     }

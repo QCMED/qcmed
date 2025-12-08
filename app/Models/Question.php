@@ -99,12 +99,12 @@ class Question extends Model
 
     public function isDraft(): bool
     {
-        return $this->status == '0';
+        return $this->status === self::STATUS_DRAFT;
     }
 
     public function isFinalized(): bool
     {
-        return $this->status == '2';
+        return $this->status === self::STATUS_FINALIZED;
     }
 
     public function scopeQuestionIsolee(Builder $query)

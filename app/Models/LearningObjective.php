@@ -20,7 +20,7 @@ class LearningObjective extends Model
     ];
 
     protected $casts = [
-        //
+        
     ];
 
     /**
