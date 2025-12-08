@@ -14,13 +14,13 @@ class Question extends Model
     use SoftDeletes;
     use HasFactory;
 
-    const TYPE_QCM = 0;
-    const TYPE_QROC = 1;
-    const TYPE_QZONE =2;
+    public const TYPE_QCM = 0;
+    public const TYPE_QROC = 1;
+    public const TYPE_QZONE =2;
 
-    const STATUS_DRAFT = 0;
-    const STATUS_TO_BE_REVIEWED = 1;
-    const STATUS_FINALIZED = 2;
+    public const STATUS_DRAFT = 0;
+    public const STATUS_TO_BE_REVIEWED = 1;
+    public const STATUS_FINALIZED = 2;
 
     protected $fillable = [
         'user_id',

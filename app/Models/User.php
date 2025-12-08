@@ -15,10 +15,10 @@ class User extends Authenticatable implements FilamentUser
     use HasFactory, Notifiable;
 
     // Role constants A RECHECKER PLUS TARD ALED
-    const ROLE_SUPERADMIN = 1;
-    const ROLE_ADMIN = 2;
-    const ROLE_REDACELEC = 3;
-    const ROLE_STUDENT = 4;
+    public const ROLE_SUPERADMIN = 1;
+    public const ROLE_ADMIN = 2;
+    public const ROLE_REDACELEC = 3;
+    public const ROLE_STUDENT = 4;
 
     /**
      * The attributes that are mass assignable.

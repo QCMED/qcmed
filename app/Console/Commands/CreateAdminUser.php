@@ -22,7 +22,7 @@ class CreateAdminUser extends Command
             return 1;
         }
 
-        $user = User::create([
+        User::create([
             'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
