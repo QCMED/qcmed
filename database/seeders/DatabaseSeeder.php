@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             LearningObjectivesDataSeeder::class,
             MatieresDataSeeder::class,
             ChapterMatiereDataSeeder::class,
+            DossierSeeder::class,
+            QuestionSeeder::class,
         ]);
     }
 }
