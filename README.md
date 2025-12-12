@@ -1,4 +1,4 @@
-# QCMED
+# QCMED ![Logo](logo.png)
 
 ## À propos
 
