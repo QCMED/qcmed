@@ -1,4 +1,4 @@
-# QCMED <img src="logo.png" alt="logo" width="90"/>
+# <img src="logo.png" alt="logo" width="90"/> QCMED 
 
 
 ## À propos
