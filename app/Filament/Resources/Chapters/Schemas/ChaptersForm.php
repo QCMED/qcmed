@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Chapters\Schemas;
 
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
@@ -22,7 +23,7 @@ class ChaptersForm
                     ->unique()
                     ->required(),
 
-                RichEditor::make("description")
+                MarkdownEditor::make("description")
                     ->required()
                     ->columnSpanFull(),
 
@@ -31,6 +32,7 @@ class ChaptersForm
                     ->columnSpanFull()
                     ->relationship()
                     ->columns(3)
+                    ->minItems(1)
                     ->components([
                         ToggleButtons::make("rang")
                         ->label("Rang de la connaisance")
@@ -42,18 +44,19 @@ class ChaptersForm
                         ]),
                         Select::make("rubrique")
                         ->label("Rubrique")
+                        ->required()
                         ->options([
-                            "Définition",
-                            "Prise En Charge",
-                            "Evaluation",
-                            "Epidémiologie",
-                            "Physiopathologie",
-                            "Diagnostic Positif",
-                            "Suivi et/ou pronostic",
-                            "Identifier une urgence",
-                            "Contenu multimédia",
-                            "Étiologies",
-                            "Examens complémentaires"
+                            "Définition" => "Définition",
+                            "Prise En Charge" => "Prise En Charge",
+                            "Evaluation" => "Evaluation",
+                            "Epidémiologie" => "Epidémiologie",
+                            "Physiopathologie" => "Physiopathologie",
+                            "Diagnostic Positif" => "Diagnostic Positif",
+                            "Suivi et/ou pronostic" => "Suivi et/ou pronostic",
+                            "Identifier une urgence" => "Identifier une urgence",
+                            "Contenu multimédia" => "Contenu multimédia",
+                            "Étiologies" => "Étiologies",
+                            "Examens complémentaires" => "Examens complémentaires"
                         ])
                         ->columnSpan(2),
 
