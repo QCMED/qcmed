@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Matieres;
 use App\Filament\Resources\Matieres\Pages\CreateMatiere;
 use App\Filament\Resources\Matieres\Pages\EditMatiere;
 use App\Filament\Resources\Matieres\Pages\ListMatieres;
+use App\Filament\Resources\Matieres\RelationManagers\ChaptersRelationManager;
 use App\Filament\Resources\Matieres\Schemas\MatiereForm;
 use App\Filament\Resources\Matieres\Tables\MatieresTable;
 use App\Models\Matiere;
@@ -37,7 +38,7 @@ class MatiereResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ChaptersRelationManager::class
         ];
     }
 
