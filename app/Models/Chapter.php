@@ -25,10 +25,10 @@ class Chapter extends Model
     {
         return "Item {$this->numero} - ".\Illuminate\Support\Str::limit($this->description, 80);
     }
-    
-    public function matieres() : BelongsToMany
+
+    public function matieres(): BelongsToMany
     {
-        return $this->belongsToMany(Matiere::class, "chapter_matiere", "chapter_id", "matiere_id");
+        return $this->belongsToMany(Matiere::class, 'chapter_matiere', 'chapter_id', 'matiere_id');
     }
 
     /**

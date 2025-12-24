@@ -38,7 +38,7 @@ class MatiereResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ChaptersRelationManager::class
+            ChaptersRelationManager::class,
         ];
     }
 

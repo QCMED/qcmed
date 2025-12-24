@@ -2,10 +2,6 @@
 
 namespace App\Filament\Resources\Matieres\Schemas;
 
-use App\Filament\Resources\Chapters\Schemas\ChaptersForm;
-use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
@@ -22,7 +18,6 @@ class MatiereForm
                 Textarea::make('description')
                     ->columnSpanFull(),
 
-                
             ]);
     }
 }

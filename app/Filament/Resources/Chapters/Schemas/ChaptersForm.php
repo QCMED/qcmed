@@ -20,11 +20,11 @@ class ChaptersForm
                 ->numeric()
                 ->unique()
                 ->required(),
-                
+
             Select::make('matieres')
                 ->multiple()
                 ->preload()
-                ->relationship(titleAttribute:"name"),
+                ->relationship(titleAttribute: 'name'),
 
             MarkdownEditor::make('description')
                 ->required()
@@ -32,7 +32,7 @@ class ChaptersForm
 
             Repeater::make('learningObjectives')
                 ->required()
-                ->label("Objectif de connaissance")
+                ->label('Objectif de connaissance')
                 ->columnSpanFull()
                 ->grid(3)
                 ->relationship()

@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Matieres\RelationManagers;
 
-use Filament\Actions\AssociateAction;
 use Filament\Actions\AttachAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
@@ -10,16 +9,14 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\DetachAction;
 use Filament\Actions\DetachBulkAction;
-use Filament\Actions\DissociateAction;
-use Filament\Actions\DissociateBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
@@ -52,7 +49,7 @@ class ChaptersRelationManager extends RelationManager
             ->components([
                 TextEntry::make('numero')
                     ->numeric(),
-                TextEntry::make('description'),  
+                TextEntry::make('description'),
             ]);
     }
 
@@ -64,7 +61,7 @@ class ChaptersRelationManager extends RelationManager
                 TextColumn::make('numero')
                     ->numeric()
                     ->sortable()
-                    ->weight("bold"),
+                    ->weight('bold'),
                 TextColumn::make('description')
                     ->searchable()
                     ->limit(100)
@@ -90,7 +87,7 @@ class ChaptersRelationManager extends RelationManager
                 CreateAction::make(),
                 AttachAction::make()
                     ->preloadRecordSelect()
-                    ->recordSelectSearchColumns(["description","numero"])
+                    ->recordSelectSearchColumns(['description', 'numero'])
                     ->multiple(),
             ])
             ->recordActions([
