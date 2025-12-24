@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -23,6 +24,11 @@ class Chapter extends Model
     public function getNameAttribute(): string
     {
         return "Item {$this->numero} - ".\Illuminate\Support\Str::limit($this->description, 80);
+    }
+    
+    public function matieres() : BelongsToMany
+    {
+        return $this->belongsToMany(Matiere::class, "chapter_matiere", "chapter_id", "matiere_id");
     }
 
     /**
