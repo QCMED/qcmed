@@ -11,6 +11,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\TextSize;
 use Illuminate\Support\Facades\Auth;
 
 class AnswerQuestion extends Page implements HasForms
@@ -38,42 +39,39 @@ class AnswerQuestion extends Page implements HasForms
         return $schema
             ->components([
                 Section::make('Question')
-                    ->description("Item {$record->chapter?->numero} - ".match (strval($record->type)) {
-                        '0' => 'QCM/QRU/QRP',
-                        '1' => 'QROC',
-                        '2' => 'QZONE',
-                        default => 'Inconnu'
-                    })
                     ->schema([
-                        \Filament\Schemas\Components\Html::make(fn () => $record->body),
-                    ])
-                    ->collapsible()
-                    ->persistCollapsed(),
+                        \Filament\Schemas\Components\Text::make(fn () => $record->body)
+                            ->size(TextSize::Large),
+                        
+                            \Filament\Schemas\Components\Form::make()
+                            
+                                ->schema([
+                                    \Filament\Forms\Components\CheckboxList::make('selected_answers')
+                                        ->label("Cochez les propositions vraies")
+                                        
+                                        ->options(function () use ($record) {
+                                            $options = [];
+                                            foreach ($record->expected_answer ?? [] as $index => $answer) {
+                                                $letter = chr(65 + $index);
+                                                $options[$index] = "{$letter}- {$answer['proposition']}";
+                                            }
 
-                Section::make('Vos réponses')
-                    ->description('Cochez les propositions que vous considérez vraies')
-                    ->schema([
-                        \Filament\Schemas\Components\Form::make()
-                            ->schema([
-                                \Filament\Forms\Components\CheckboxList::make('selected_answers')
-                                    ->label('')
-                                    ->options(function () use ($record) {
-                                        $options = [];
-                                        foreach ($record->expected_answer ?? [] as $index => $answer) {
-                                            $letter = chr(65 + $index);
-                                            $options[$index] = "{$letter}. {$answer['proposition']}";
-                                        }
+                                            return $options;
+                                        })
+                                        ->required()
+                                        ->markAsRequired(False)
+                                        ->columns(1)
+                                        ->gridDirection('row'),
+                                ]),
+                        ])
+                        ->visible(fn () => strval($record->type) === '0'),
+                            ])
+                        
+                        ->statePath('data');
+                    
+                    
 
-                                        return $options;
-                                    })
-                                    ->required()
-                                    ->columns(1)
-                                    ->gridDirection('row'),
-                            ]),
-                    ])
-                    ->visible(fn () => strval($record->type) === '0'),
-            ])
-            ->statePath('data');
+                
     }
 
     protected function getFormActions(): array
@@ -94,20 +92,20 @@ class AnswerQuestion extends Page implements HasForms
     public function submitAnswer(): void
     {
         $data = $this->form->getState();
-        $selectedAnswers = $data['selected_answers'] ?? [];
+        $selectedAnswers = $data['selected_answers'] ;
 
         // Calculer le score
         $correctAnswers = [];
-        foreach ($this->record->expected_answer as $index => $answer) {
-            if ($answer['vrai'] ?? false) {
-                $correctAnswers[] = $index;
-            }
-        }
+        foreach ($this->record->expected_answer as $index => $answer) {   //Ce bloc sert à avoir une liste simple avec les bonnes réponses
+            if ($answer['vrai'] ?? false) {                               //On pourrait optimiser le temps de calcul de la bonne réponse contre plus d'espace
+                $correctAnswers[] = $index;                               //dans la DB en ajoutant une colonne qui contient directement la données sous cette
+            }                                                             //forme + simple dans la table des questions
+        }                                                                  
 
-        $isCorrect = empty(array_diff($correctAnswers, $selectedAnswers)) &&
-                     empty(array_diff($selectedAnswers, $correctAnswers));
+        $isCorrect = empty(array_diff($correctAnswers, $selectedAnswers)) && // Pas de différence entre la liste de réponses cochées et la liste de
+                     empty(array_diff($selectedAnswers, $correctAnswers));   // réponses vraies
 
-        $score = $isCorrect ? 100 : 0;
+        $score = $isCorrect? True:False;  // Il faudrait un contrôleur pour calculer le nombre de points selon le type de questions
 
         // Enregistrer la tentative
         Attempt::create([
@@ -122,13 +120,13 @@ class AnswerQuestion extends Page implements HasForms
         if ($isCorrect) {
             Notification::make()
                 ->title('Bravo !')
-                ->body('Votre réponse est correcte.')
+                ->body('Bonne réponse.')
                 ->success()
                 ->send();
         } else {
             Notification::make()
                 ->title('Incorrect')
-                ->body('Votre réponse n\'est pas correcte. Consultez la correction.')
+                ->body('Mauvaise réponse.')
                 ->warning()
                 ->send();
         }
