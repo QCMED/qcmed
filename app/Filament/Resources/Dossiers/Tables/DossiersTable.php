@@ -22,13 +22,6 @@ class DossiersTable
                     ->label('#')
                     ->sortable(),
 
-                TextColumn::make('chapter.numero')
-                    ->label('Item')
-                    ->sortable()
-                    ->searchable()
-                    ->formatStateUsing(fn ($state) => "Item {$state}")
-                    ->weight('bold'),
-
                 TextColumn::make('title')
                     ->label('Titre')
                     ->searchable()
@@ -82,10 +75,6 @@ class DossiersTable
                 TrashedFilter::make(),
             ])
             ->defaultSort('created_at', 'desc')
-
-            ->filters([
-                TrashedFilter::make(),
-            ])
             ->recordActions([
                 EditAction::make(),
             ])

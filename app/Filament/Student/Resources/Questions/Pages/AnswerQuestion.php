@@ -167,7 +167,7 @@ class AnswerQuestion extends Page implements HasForms
         $actions = [
             Action::make('cancel')
                 ->label('Retour')
-                ->url(QuestionResource::getUrl('index'))
+                ->url(route('filament.student.resources.questions.index'))
                 ->color('gray'),
         ];
 
@@ -259,6 +259,6 @@ class AnswerQuestion extends Page implements HasForms
         }
 
         // Rediriger vers la page de correction
-        $this->redirect(QuestionResource::getUrl('view', ['record' => $this->record]));
+        $this->redirect(route('filament.student.resources.questions.view', ['record' => $this->record]));
     }
 }

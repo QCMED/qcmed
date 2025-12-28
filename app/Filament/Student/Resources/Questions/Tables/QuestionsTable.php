@@ -116,7 +116,7 @@ class QuestionsTable
                     }),
             ])
             ->recordAction(null)
-            ->recordUrl(fn ($record) => \App\Filament\Student\Resources\Questions\QuestionResource::getUrl('answer', ['record' => $record]))
+            ->recordUrl(fn ($record) => route('filament.student.resources.questions.answer', ['record' => $record]))
             ->toolbarActions([]);
     }
 }
