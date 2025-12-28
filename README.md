@@ -1,9 +1,9 @@
-# <img src="logo.png" alt="logo" width="50"/> QCMED 
+# <img src="docs/images/logo.png" alt="logo" width="50"/> QCMED 
 
 
 ## À propos
 
-![social preview](QCMED_social_preview.png)
+![social preview](docs/images/social_preview.png)
 
 <span style="font-weight:bold">L'alternative gratuite aux prépas EDN en ligne!</span>
 <p style = "text-align: justify">
