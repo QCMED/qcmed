@@ -7,12 +7,13 @@ use App\Models\Matiere;
 use Filament\Pages\Page;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use BackedEnum;
 
 class StudentDashboard extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-home';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-home';
 
-    protected static string $view = 'filament.student.pages.dashboard';
+    protected string $view = 'filament.student.pages.dashboard';
 
     protected static ?string $title = 'Tableau de bord';
 

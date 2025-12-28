@@ -16,6 +16,7 @@ Pour l'instant l'équipe est composée d'étudiants en médecine amateurs d'info
 
 - 🪧 [À propos](#à-propos)
 - 🚀 [Installation](#installation)
+- 🐳 [Installation avec Docker](#installation-avec-docker)
 - 🛠️ [Utilisation](#utilisation)
 - ⛵ [Déploiement](#déploiement)
 - 🤝 [Contribution](#contribution)
@@ -75,6 +76,23 @@ php artisan migrate --seed
 
 Le seeder crée des utilisateurs de test, des items et des questions exemples.
 
+## Installation avec Docker
+
+Si vous avez Docker installé, vous pouvez démarrer l'application en une seule commande :
+
+```bash
+# Cloner et démarrer
+git clone https://github.com/QCMED/qcmed.git
+cd qcmed
+docker compose up -d
+```
+
+L'application sera disponible sur http://localhost avec les identifiants :
+- **Admin** : admin@example.com / password
+- **Étudiant** : student@example.com / password
+
+Pour plus de détails, voir la section [Déploiement](#déploiement).
+
 ## Utilisation
 
 Pour accéder au dashboard d'administrateur, vous pouvez créer un utilisateur avec
@@ -91,7 +109,72 @@ Vous pouvez également commencer directement avec l'utilisateur admin@example.co
 
 ## Déploiement
 
-Le tutoriel pour le déploiement arrivera dès qu'une version bêta-test sera disponible!
+### Avec Docker (Recommandé)
+
+La méthode la plus simple pour déployer QCMed est d'utiliser Docker.
+
+#### Prérequis
+
+- [Docker](https://docs.docker.com/get-docker/) installé sur votre machine
+- [Docker Compose](https://docs.docker.com/compose/install/) (inclus avec Docker Desktop)
+
+#### Démarrage rapide
+
+```bash
+# Cloner le projet
+git clone https://github.com/QCMED/qcmed.git
+cd qcmed
+
+# Lancer l'application
+docker compose up -d
+```
+
+L'application sera accessible sur http://localhost
+
+#### Commandes Docker utiles
+
+```bash
+# Démarrer l'application
+docker compose up -d
+
+# Voir les logs
+docker compose logs -f
+
+# Arrêter l'application
+docker compose down
+
+# Reconstruire l'image (après modification du code)
+docker compose build --no-cache
+docker compose up -d
+
+# Exécuter des commandes artisan
+docker compose exec app php artisan migrate
+docker compose exec app php artisan db:seed
+
+# Accéder au shell du container
+docker compose exec app sh
+```
+
+#### Configuration
+
+Vous pouvez personnaliser le port en créant un fichier `.env` :
+
+```bash
+APP_PORT=8080
+APP_ENV=production
+APP_DEBUG=false
+```
+
+#### Identifiants par défaut
+
+| Rôle | Email | Mot de passe |
+|------|-------|--------------|
+| Admin | admin@example.com | password |
+| Étudiant | student@example.com | password |
+
+### Sans Docker
+
+Le tutoriel pour le déploiement sans Docker arrivera dès qu'une version bêta-test sera disponible!
 
 ## Contribution
 

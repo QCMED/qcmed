@@ -12,14 +12,15 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use BackedEnum;
 
 class AttemptsHistory extends Page implements HasTable
 {
     use InteractsWithTable;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clock';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clock';
 
-    protected static string $view = 'filament.student.pages.attempts-history';
+    protected string $view = 'filament.student.pages.attempts-history';
 
     protected static ?string $title = 'Historique des tentatives';
 
