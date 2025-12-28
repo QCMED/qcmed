@@ -2,9 +2,9 @@
 
 namespace App\Filament\Student\Resources\Dossiers;
 
-use App\Filament\Student\Resources\Dossiers\Pages\CreateDossier;
-use App\Filament\Student\Resources\Dossiers\Pages\EditDossier;
+use App\Filament\Student\Resources\Dossiers\Pages\AnswerDossier;
 use App\Filament\Student\Resources\Dossiers\Pages\ListDossiers;
+use App\Filament\Student\Resources\Dossiers\Pages\ViewDossier;
 use App\Filament\Student\Resources\Dossiers\Schemas\DossierForm;
 use App\Filament\Student\Resources\Dossiers\Tables\DossiersTable;
 use App\Models\Dossier;
@@ -22,7 +22,11 @@ class DossierResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'dossier';
+    protected static ?string $navigationLabel = 'Dossiers';
+
+    protected static ?string $recordTitleAttribute = 'title';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema
     {
@@ -36,25 +40,22 @@ class DossierResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
             'index' => ListDossiers::route('/'),
-            'create' => CreateDossier::route('/create'),
-            'edit' => EditDossier::route('/{record}/edit'),
+            'answer' => AnswerDossier::route('/{record}/answer'),
+            'view' => ViewDossier::route('/{record}'),
         ];
     }
 
-    public static function getRecordRouteBindingEloquentQuery(): Builder
+    public static function getEloquentQuery(): Builder
     {
-        return parent::getRecordRouteBindingEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([SoftDeletingScope::class])
+            ->whereHas('questions', fn ($q) => $q->finalized());
     }
 }

@@ -16,7 +16,7 @@ class ViewQuestion extends ViewRecord
                 ->label('Retour aux questions')
                 ->icon('heroicon-o-arrow-left')
                 ->color('primary')
-                ->url(QuestionResource::getUrl('index')),
+                ->url(route('filament.student.resources.questions.index')),
         ];
     }
 
@@ -27,7 +27,7 @@ class ViewQuestion extends ViewRecord
                 ->label('Retour aux questions')
                 ->icon('heroicon-o-arrow-left')
                 ->color('primary')
-                ->url(QuestionResource::getUrl('index')),
+                ->url(route('filament.student.resources.questions.index')),
         ];
     }
 }

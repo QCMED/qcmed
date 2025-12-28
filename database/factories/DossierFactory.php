@@ -12,6 +12,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class DossierFactory extends Factory
 {
     /**
+     * Create dossiers without auto-creating questions.
+     */
+    protected bool $withQuestions = false;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -26,10 +31,13 @@ class DossierFactory extends Factory
         ];
     }
 
-    public function configure()
+    /**
+     * Create dossier with auto-generated questions.
+     */
+    public function withQuestions(int $count = 5): static
     {
-        return $this->afterCreating(function ($dossier) {
-            $questions = Question::factory()->count(5)->create();
+        return $this->afterCreating(function ($dossier) use ($count) {
+            $questions = Question::factory()->count($count)->create();
             $dossier->questions()->saveMany($questions);
         });
     }

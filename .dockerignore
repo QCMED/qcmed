@@ -1,0 +1,59 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE et éditeurs
+.idea
+.vscode
+*.swp
+*.swo
+
+# Node modules (reconstruits dans le container)
+node_modules
+
+# Vendor (reconstruit dans le container)
+vendor
+
+# Fichiers de build locaux
+public/build
+public/hot
+
+# Fichiers de test
+tests
+phpunit.xml
+.phpunit.result.cache
+
+# Fichiers de configuration locaux
+.env
+.env.local
+.env.*.local
+
+# Logs et cache locaux
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*
+
+# Base de données SQLite locale
+database/*.sqlite
+
+# Docker
+docker-compose.override.yml
+Dockerfile.dev
+
+# Documentation
+docs
+*.md
+!README.md
+
+# Fichiers de développement
+.editorconfig
+.styleci.yml
+phpstan.neon
+pint.json
+
+# OS
+.DS_Store
+Thumbs.db

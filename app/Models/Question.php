@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Model
@@ -80,6 +81,11 @@ class Question extends Model
     public function learningObjectives(): BelongsToMany
     {
         return $this->belongsToMany(LearningObjective::class);
+    }
+
+    public function attempts(): HasMany
+    {
+        return $this->hasMany(Attempt::class);
     }
 
     // public function reviews()

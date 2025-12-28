@@ -44,7 +44,12 @@ class SecurityPanelTest extends TestCase
         $student = User::factory()->create(['role' => User::ROLE_STUDENT]);
         $this->actingAs($student);
 
+        // Filament panels redirect to their default page (dashboard)
         $response = $this->get('/student');
-        $response->assertStatus(200);
+        $response->assertRedirect();
+
+        // Follow the redirect to verify access is granted
+        $response = $this->followingRedirects()->get('/student');
+        $response->assertSuccessful();
     }
 }
